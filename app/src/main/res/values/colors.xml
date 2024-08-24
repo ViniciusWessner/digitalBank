@@ -5,4 +5,5 @@
 
 
     <color name="color_default">#31A6F6</color>
+    <color name="color_hint">#84BDE3</color>
 </resources>
