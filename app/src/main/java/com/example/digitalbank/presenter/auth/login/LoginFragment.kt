@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.digitalbank.R
 import com.example.digitalbank.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
