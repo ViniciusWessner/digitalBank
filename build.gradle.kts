@@ -6,6 +6,6 @@ plugins {
     //firebase
     id("com.google.gms.google-services") version "4.4.2" apply false
 
-    //dagger hilt
-    id("com.google.dagger.hilt.android") version "2.44" apply false
+    //dagger hilt (nao reduzir versao)
+    id("com.google.dagger.hilt.android") version "2.48" apply false
 }
