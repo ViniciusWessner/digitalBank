@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "857228652129",
+    "project_id": "digitalbank-wessner",
+    "storage_bucket": "digitalbank-wessner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857228652129:android:d1ee6a0feb49acbd1a8420",
+        "android_client_info": {
+          "package_name": "com.example.digitalbank"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0y25VjNDcduR4Mjtwxj17Tklhh4TxF1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
