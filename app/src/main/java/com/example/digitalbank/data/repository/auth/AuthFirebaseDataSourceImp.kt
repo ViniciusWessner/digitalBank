@@ -2,16 +2,25 @@ package com.example.digitalbank.data.repository.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.FirebaseDatabase
 import kotlin.coroutines.suspendCoroutine
 
 class AuthFirebaseDataSourceImp(
-   private val firebaseDatabase: FirebaseDatabase,
    private val firebaseAuth: FirebaseAuth
 ): AuthFirebaseDataSource {
 
     override suspend fun login(email: String, senha: String) {
-        TODO("Not yet implemented")
+        return suspendCoroutine { continuation ->
+            firebaseAuth.signInWithEmailAndPassword(email, senha)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        continuation.resumeWith(Result.success(Unit))
+                    } else {
+                        task.exception?.let {
+                            continuation.resumeWith(Result.failure(it))
+                        }
+                    }
+                }
+        }
     }
 
     override suspend fun register(nome: String, email: String, celular: String, senha: String): FirebaseUser {
