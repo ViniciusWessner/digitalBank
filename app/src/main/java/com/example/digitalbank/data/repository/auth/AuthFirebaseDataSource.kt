@@ -1,7 +1,6 @@
 package com.example.digitalbank.data.repository.auth
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.example.digitalbank.data.model.User
 
 interface AuthFirebaseDataSource {
 
@@ -13,11 +12,8 @@ interface AuthFirebaseDataSource {
     
     //registro
     suspend fun register(
-        nome: String,
-        email: String,
-        celular: String,
-        senha: String
-    ): FirebaseUser
+        user: User
+    ): User
 
     //recuperar senha
     suspend fun recover (

@@ -1,10 +1,12 @@
 package com.example.digitalbank.data.repository.auth
 
+import com.example.digitalbank.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import javax.inject.Inject
 import kotlin.coroutines.suspendCoroutine
 
-class AuthFirebaseDataSourceImp(
+class AuthFirebaseDataSourceImp @Inject constructor(
    private val firebaseAuth: FirebaseAuth
 ): AuthFirebaseDataSource {
 
@@ -23,15 +25,12 @@ class AuthFirebaseDataSourceImp(
         }
     }
 
-    override suspend fun register(nome: String, email: String, celular: String, senha: String): FirebaseUser {
+    override suspend fun register(user: User): User {
         return suspendCoroutine { continuation ->
-            firebaseAuth.createUserWithEmailAndPassword(email, senha)
+            firebaseAuth.createUserWithEmailAndPassword(user.email, user.senha)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val user = task.result.user
-                        user?.let {
-                            continuation.resumeWith(Result.success(it))
-                        }
+                        continuation.resumeWith(Result.success(user))
                     } else {
                         task.exception?.let {
                             continuation.resumeWith(Result.failure(it))
@@ -42,7 +41,18 @@ class AuthFirebaseDataSourceImp(
     }
 
     override suspend fun recover(email: String) {
-        TODO("Not yet implemented")
+        return suspendCoroutine { continuation ->
+            firebaseAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        continuation.resumeWith(Result.success(Unit))
+                    } else {
+                        task.exception?.let {
+                            continuation.resumeWith(Result.failure(it))
+                        }
+                    }
+                }
+        }
     }
 
 }
