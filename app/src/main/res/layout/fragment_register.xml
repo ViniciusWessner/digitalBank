@@ -102,6 +102,7 @@
                 android:background="@drawable/bg_edit_around"
                 android:layout_marginTop="4dp"
                 style="@style/Theme.EditText"
+                android:inputType="textEmailAddress"
                 android:hint="Digite seu número de celular"
                 android:drawableStart="@drawable/ic_phone" />
 
@@ -121,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 style="@style/Theme.EditText"
+                android:inputType="textPassword"
                 android:hint="Digite sua senha"
                 android:drawableStart="@drawable/ic_password" />
 
