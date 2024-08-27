@@ -1,22 +1,22 @@
-package com.example.digitalbank.presenter.auth.login
+package com.example.digitalbank.presenter.auth.recover
 
 import androidx.lifecycle.liveData
-import com.example.digitalbank.domain.auth.LoginUseCase
+import com.example.digitalbank.domain.auth.RecoverUseCase
 import com.example.digitalbank.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-   private val loginUseCase: LoginUseCase
+class RecoverViewModel @Inject constructor(
+   private val recoverUseCase: RecoverUseCase
 ) {
 
-    fun login(email: String, senha: String) = liveData(Dispatchers.IO) {
+    fun login(email: String) = liveData(Dispatchers.IO) {
         try {
             emit(StateView.Loading())
 
-           loginUseCase.invoke(email, senha)
+           recoverUseCase.invoke(email)
 
             emit(StateView.Sucess(null))
 
