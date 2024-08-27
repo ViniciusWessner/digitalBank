@@ -1,5 +1,7 @@
 package com.example.digitalbank.data.repository.auth
 
+import com.example.digitalbank.data.model.User
+
 interface AuthFirebaseDataSource {
 
     //login
@@ -10,11 +12,8 @@ interface AuthFirebaseDataSource {
     
     //registro
     suspend fun register(
-        nome: String,
-        email: String,
-        celular: String,
-        senha: String
-    )
+        user: User
+    ): User
 
     //recuperar senha
     suspend fun recover (
