@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
+import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentLoginBinding
+import com.example.digitalbank.util.StateView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +20,8 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    private val loginViewModel : LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,12 +57,31 @@ class LoginFragment : Fragment() {
 
         if (email.isNotEmpty()){
             if (senha.isNotEmpty()){
-                Toast.makeText(requireContext(), "Login realizado", Toast.LENGTH_SHORT).show()
+                loginUser(email, senha)
             }else{
                 Toast.makeText(requireContext(), "Digite sua senha", Toast.LENGTH_SHORT).show()
             }
         }else{
             Toast.makeText(requireContext(), "Digite um e-mail", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun loginUser(email: String, senha: String){
+
+        loginViewModel.login(email, senha).observe(viewLifecycleOwner){ stateView ->
+            when(stateView){
+                is StateView.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                is StateView.Sucess -> {
+                    binding.progressBar.isVisible = false
+                    findNavController().navigate(R.id.action_global_homeFragment)
+                }
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

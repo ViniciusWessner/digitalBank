@@ -16,14 +16,15 @@
 
         <EditText
             android:id="@+id/edit_email"
+            style="@style/Theme.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
             android:drawableStart="@drawable/ic_email"
-            style="@style/Theme.EditText"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
             app:layout_constraintBottom_toTopOf="@+id/edit_senha"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
@@ -34,6 +35,7 @@
             android:layout_height="wrap_content"
             android:hint="Senha"
             style="@style/Theme.EditText"
+            android:inputType="textPassword"
             android:drawableStart="@drawable/ic_password"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_login"
