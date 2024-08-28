@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import com.example.digitalbank.R
+import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentRegisterBinding
+import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +21,8 @@ class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
+
+    private val registerViewModel: RegisterViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,8 +57,11 @@ class RegisterFragment : Fragment() {
             if (email.isNotEmpty()){
                 if (celular.isNotEmpty()){
                     if (senha == confirmSenha && senha.isNotEmpty() && confirmSenha.isNotEmpty()){
-                        TODO("Fazer login")
-                        Toast.makeText(requireContext(), "Cadastro realizado", Toast.LENGTH_SHORT).show()
+                        val user = User(name, email, celular, senha)
+                        registerUser(user)
+
+                        binding.progressBar.isVisible = true
+
                     } else {
                         Toast.makeText(requireContext(), "Verifique sua senha", Toast.LENGTH_SHORT).show()
                     }
@@ -66,6 +75,25 @@ class RegisterFragment : Fragment() {
             Toast.makeText(requireContext(), "Digite seu nome", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    private fun registerUser(user: User){
+
+        registerViewModel.register(user).observe(viewLifecycleOwner){ stateView ->
+            when(stateView){
+                is StateView.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                is StateView.Sucess -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(requireContext(), "Cadastro realizado", Toast.LENGTH_SHORT).show()
+                }
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
