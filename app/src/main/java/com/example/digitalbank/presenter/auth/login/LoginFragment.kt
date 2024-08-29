@@ -13,6 +13,7 @@ import com.example.digitalbank.R
 import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentLoginBinding
 import com.example.digitalbank.util.StateView
+import com.example.digitalbank.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +36,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
+        showBottomSheet(message = "Ocorreu um erro, faça a seguinte ação")
     }
 
     private fun initListeners(){

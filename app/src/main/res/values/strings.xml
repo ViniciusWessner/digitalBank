@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">DigitalBank</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="title_bottom_sheet">Atenção</string>
+    <string name="message_bottom_sheet">Mensagem generica aqui ocorreu um erro faça isso para solucionar</string>
+    <string name="button_bottom_sheet">Entendido</string>
+
 </resources>
