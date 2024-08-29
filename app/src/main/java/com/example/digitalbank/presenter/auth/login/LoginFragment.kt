@@ -36,7 +36,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
-        showBottomSheet(message = "Ocorreu um erro, faça a seguinte ação")
+
     }
 
     private fun initListeners(){

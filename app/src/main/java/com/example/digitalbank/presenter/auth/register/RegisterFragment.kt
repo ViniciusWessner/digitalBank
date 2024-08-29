@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentRegisterBinding
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
+import com.example.digitalbank.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,16 +65,16 @@ class RegisterFragment : Fragment() {
                         binding.progressBar.isVisible = true
 
                     } else {
-                        Toast.makeText(requireContext(), "Verifique sua senha", Toast.LENGTH_SHORT).show()
+                        showBottomSheet(message = getString(R.string.senhas_iguais))
                     }
                 }else{
-                    Toast.makeText(requireContext(), "Digite seu celular", Toast.LENGTH_SHORT).show()
+                    showBottomSheet(message = getString(R.string.celular_empty))
                 }
             }else{
-                Toast.makeText(requireContext(), "Digite uma senha", Toast.LENGTH_SHORT).show()
+                showBottomSheet(message = getString(R.string.email_empty))
             }
         } else{
-            Toast.makeText(requireContext(), "Digite seu nome", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.name_empty))
         }
 
     }
@@ -86,7 +88,7 @@ class RegisterFragment : Fragment() {
                 }
                 is StateView.Sucess -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), "Cadastro realizado", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_global_homeFragment)
                 }
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
