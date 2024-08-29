@@ -9,6 +9,10 @@
     <string name="celular_empty">Verifique o celular digitado</string>
     <string name="senhas_iguais">suas senhas não coinscidem</string>
 
+    <!-- loginFragment Erros -->
+    <string name="digiteSuaSenha">Digite sua senha de acesso ao sistema</string>
+    <string name="digiteSeuEmail">Digite seu e-mail de acesso ao aplicativo</string>
+
     <!-- Mensagens usada por padrao no bottomSheet -->
     <string name="title_bottom_sheet">Atenção</string>
     <string name="message_bottom_sheet">Mensagem generica aqui ocorreu um erro faça isso para solucionar</string>

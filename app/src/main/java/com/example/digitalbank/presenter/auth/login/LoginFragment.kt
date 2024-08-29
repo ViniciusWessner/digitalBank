@@ -61,10 +61,10 @@ class LoginFragment : Fragment() {
             if (senha.isNotEmpty()){
                 loginUser(email, senha)
             }else{
-                Toast.makeText(requireContext(), "Digite sua senha", Toast.LENGTH_SHORT).show()
+                showBottomSheet(message = getString(R.string.digiteSuaSenha))
             }
         }else{
-            Toast.makeText(requireContext(), "Digite um e-mail", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.digiteSeuEmail))
         }
     }
 
