@@ -8,6 +8,7 @@
     <string name="name_empty">Verifique o nome digitado</string>
     <string name="celular_empty">Verifique o celular digitado</string>
     <string name="senhas_iguais">suas senhas não coinscidem</string>
+    <string name="celular_incorreto">O celular digitado está invalido</string>
 
     <!-- loginFragment Erros -->
     <string name="digiteSuaSenha">Digite sua senha de acesso ao sistema</string>

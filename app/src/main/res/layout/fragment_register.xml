@@ -95,14 +95,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
-            <EditText
+            <com.vicmikhailau.maskededittext.MaskedEditText
                 android:id="@+id/edit_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edit_around"
                 android:layout_marginTop="4dp"
+                app:mask="(##) #####-####"
                 style="@style/Theme.EditText"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:hint="@string/input_telefone_RegisterFragment"
                 android:drawableStart="@drawable/ic_phone" />
 
