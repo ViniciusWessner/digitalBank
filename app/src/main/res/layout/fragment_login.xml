@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_email"
-            android:hint="E-mail"
+            android:hint="@string/email_loginFragment"
             android:inputType="textEmailAddress"
             app:layout_constraintBottom_toTopOf="@+id/edit_senha"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
             android:id="@+id/edit_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Senha"
+            android:hint="@string/senha_LoginFragment"
             style="@style/Theme.EditText"
             android:inputType="textPassword"
             android:drawableStart="@drawable/ic_password"
@@ -48,7 +48,7 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="@string/login_btn_LoginFragment"
             android:background="@drawable/bg_btn"
             app:backgroundTint="@color/color_default"
             android:layout_marginTop="16dp"
@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Criar Conta"
+                android:text="@string/criar_conta_btn_LoginFragment"
                 android:textAlignment="textStart"
                 android:textColor="@color/color_default" />
 
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Esqueceu a senha?"
+                android:text="@string/esqueceu_a_senha_btn_LoginFragment"
                 android:textAlignment="textEnd"
                 android:textColor="@color/color_default" />
 
