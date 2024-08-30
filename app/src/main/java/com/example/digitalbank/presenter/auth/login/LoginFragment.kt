@@ -1,6 +1,7 @@
 package com.example.digitalbank.presenter.auth.login
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentLoginBinding
+import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.StateView
+import com.example.digitalbank.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +38,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
+
     }
 
     private fun initListeners(){
@@ -59,10 +63,10 @@ class LoginFragment : Fragment() {
             if (senha.isNotEmpty()){
                 loginUser(email, senha)
             }else{
-                Toast.makeText(requireContext(), "Digite sua senha", Toast.LENGTH_SHORT).show()
+                showBottomSheet(message = getString(R.string.digiteSuaSenha))
             }
         }else{
-            Toast.makeText(requireContext(), "Digite um e-mail", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.digiteSeuEmail))
         }
     }
 
@@ -79,7 +83,7 @@ class LoginFragment : Fragment() {
                 }
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                    showBottomSheet(message = getString(FirebaseHelper.validErrors(stateView.message ?: "")))
                 }
             }
         }
