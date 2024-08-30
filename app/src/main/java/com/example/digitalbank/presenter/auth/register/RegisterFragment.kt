@@ -1,6 +1,7 @@
 package com.example.digitalbank.presenter.auth.register
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentRegisterBinding
+import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
 import com.example.digitalbank.util.showBottomSheet
@@ -92,7 +94,8 @@ class RegisterFragment : Fragment() {
                 }
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                    Log.i("DEBUGfIREBASE", "loginUser: ${stateView.message}")
+                    showBottomSheet(message = getString(FirebaseHelper.validErrors(stateView.message ?: "")))
                 }
             }
         }

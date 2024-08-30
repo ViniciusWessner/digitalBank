@@ -1,6 +1,7 @@
 package com.example.digitalbank.presenter.auth.recover
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.databinding.FragmentRecoverBinding
+import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
+import com.example.digitalbank.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,7 +53,7 @@ class RecoverFragment : Fragment() {
         if (email.isNotEmpty()){
             recouverAccount(email)
         }else{
-            Toast.makeText(requireContext(), "Digite seu e-mail correto", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.preenchaEmail))
         }
     }
 
@@ -63,12 +66,12 @@ class RecoverFragment : Fragment() {
                 }
                 is StateView.Sucess -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), "Verifique sua caixa de SPAM", Toast.LENGTH_SHORT).show()
+                    showBottomSheet(message = getString((R.string.verifiqueEmail)))
                     findNavController().popBackStack()
                 }
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                    showBottomSheet(message = getString(FirebaseHelper.validErrors(stateView.message ?: "")))
                 }
             }
         }

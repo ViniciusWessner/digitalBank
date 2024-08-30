@@ -1,6 +1,7 @@
 package com.example.digitalbank.presenter.auth.login
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentLoginBinding
+import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,7 +83,7 @@ class LoginFragment : Fragment() {
                 }
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                    showBottomSheet(message = getString(FirebaseHelper.validErrors(stateView.message ?: "")))
                 }
             }
         }
