@@ -12,12 +12,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.data.model.User
+import com.example.digitalbank.data.model.Wallet
 import com.example.digitalbank.databinding.FragmentRegisterBinding
 import com.example.digitalbank.presenter.profile.ProfileViewModel
+import com.example.digitalbank.presenter.wallet.WalletViewModel
 import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
 import com.example.digitalbank.util.showBottomSheet
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,8 +30,9 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
-    private val registerViewModel: RegisterViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
+    private val registerViewModel: RegisterViewModel by viewModels()
+    private val walletViewModel: WalletViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,6 +114,7 @@ class RegisterFragment : Fragment() {
                 }
                 is StateView.Sucess -> {
                     binding.progressBar.isVisible = false
+                    initWallet()
                     findNavController().navigate(R.id.action_global_homeFragment)
                 }
                 is StateView.Error -> {
@@ -119,6 +124,30 @@ class RegisterFragment : Fragment() {
             }
         }
     }
+
+    private fun initWallet() {
+        walletViewModel.initWallet(
+            Wallet(
+            userId = FirebaseHelper.getUserId(),
+        )
+        ).observe(viewLifecycleOwner){ stateView ->
+            when(stateView){
+                is StateView.Loading -> {
+
+                }
+                is StateView.Sucess -> {
+                    binding.progressBar.isVisible = false
+                    findNavController().navigate(R.id.action_global_homeFragment)
+                }
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    showBottomSheet(message = getString(FirebaseHelper.validErrors(stateView.message ?: "")))
+                }
+            }
+        }
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
