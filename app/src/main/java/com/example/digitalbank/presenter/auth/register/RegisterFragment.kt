@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentRegisterBinding
+import com.example.digitalbank.presenter.profile.ProfileViewModel
 import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
@@ -27,6 +28,7 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val registerViewModel: RegisterViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,22 +54,23 @@ class RegisterFragment : Fragment() {
     private fun validadeDate() {
         val name = binding.editName.text.toString().trim()
         val email = binding.editEmail.text.toString().trim()
-        val celular = binding.editPhone.text.toString().trim()
+        val celular = binding.editPhone.unMaskedText //sem a mascara
         val senha = binding.editSenha.text.toString().trim()
         val confirmSenha = binding.editConfirmSenha.text.toString().trim()
 
 
         if (name.isNotEmpty()){
             if (email.isNotEmpty()){
-                if (celular.isNotEmpty()){
-                    if (senha == confirmSenha && senha.isNotEmpty() && confirmSenha.isNotEmpty()){
-                        val user = User(name, email, celular, senha)
-                        registerUser(user)
-
-                        binding.progressBar.isVisible = true
-
-                    } else {
-                        showBottomSheet(message = getString(R.string.senhas_iguais))
+                if (celular?.isNotEmpty() == true){
+                    if (celular.length == 11) {
+                        if (senha == confirmSenha && senha.isNotEmpty() && confirmSenha.isNotEmpty()){
+                            registerUser(name, email, celular, senha)
+                            binding.progressBar.isVisible = true
+                        } else {
+                            showBottomSheet(message = getString(R.string.senhas_iguais))
+                        }
+                    } else{
+                        showBottomSheet(message = getString(R.string.celular_incorreto))
                     }
                 }else{
                     showBottomSheet(message = getString(R.string.celular_empty))
@@ -81,12 +84,29 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun registerUser(user: User){
-
-        registerViewModel.register(user).observe(viewLifecycleOwner){ stateView ->
+    private fun registerUser(nome: String,email: String, celular: String, senha: String){
+        registerViewModel.register(nome, email, celular, senha).observe(viewLifecycleOwner){ stateView ->
             when(stateView){
                 is StateView.Loading -> {
                     binding.progressBar.isVisible = true
+                }
+                is StateView.Sucess -> {
+                    stateView.data?.let { saveProfile(it) }
+
+                }
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    showBottomSheet(message = getString(FirebaseHelper.validErrors(stateView.message ?: "")))
+                }
+            }
+        }
+    }
+
+    private fun saveProfile(user: User){
+        profileViewModel.saveProfile(user).observe(viewLifecycleOwner){ stateView ->
+            when(stateView){
+                is StateView.Loading -> {
+
                 }
                 is StateView.Sucess -> {
                     binding.progressBar.isVisible = false
@@ -94,7 +114,6 @@ class RegisterFragment : Fragment() {
                 }
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    Log.i("DEBUGfIREBASE", "loginUser: ${stateView.message}")
                     showBottomSheet(message = getString(FirebaseHelper.validErrors(stateView.message ?: "")))
                 }
             }

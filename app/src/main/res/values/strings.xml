@@ -8,6 +8,7 @@
     <string name="name_empty">Verifique o nome digitado</string>
     <string name="celular_empty">Verifique o celular digitado</string>
     <string name="senhas_iguais">suas senhas não coinscidem</string>
+    <string name="celular_incorreto">O celular digitado está invalido</string>
 
     <!-- loginFragment Erros -->
     <string name="digiteSuaSenha">Digite sua senha de acesso ao sistema</string>
@@ -16,6 +17,32 @@
     <!-- registerFragment Erros -->
     <string name="preenchaEmail">Preencha seu e-mail de acesso ao aplicativo</string>
     <string name="verifiqueEmail">Prontinho! enviamos um e-mail com o link para redefinição da senha, verifique sua caixa de SPAM</string>
+
+    <!-- Login Fragment -->
+    <string name="email_loginFragment">E-mail</string>
+    <string name="senha_LoginFragment">Senha</string>
+    <string name="login_btn_LoginFragment">Login</string>
+    <string name="criar_conta_btn_LoginFragment">Criar Conta</string>
+    <string name="esqueceu_a_senha_btn_LoginFragment">Esqueceu a senha?</string>
+
+    <!-- Recover Fragment -->
+    <string name="text_topo_RecoverFragment">Digite seu e-mail do cadastro para enviarmos um link para redefinição de senha</string>
+    <string name="e_mail_text_RecoverFragment">E-mail</string>
+    <string name="email_RecoverFragment">Digite seu e-mail</string>
+    <string name="btn_enviarLink_RecoverFragment">Enviar Email</string>
+
+    <!-- Register Fragment -->
+    <string name="txt_nome_RegiterFragment">Nome</string>
+    <string name="txt_email_RegisterFragment">E-mail</string>
+    <string name="txt_telefone_RegisterFragment">Telefone</string>
+    <string name="txt_senha_RegisterFragment">Senha</string>
+    <string name="txt_confirm_senha_RegisterFragment">Senha</string>
+    <string name="input_confirm_senha_RegisterFragment">Confirme sua senha</string>
+    <string name="input_nome_RegisterFragment">Digite seu Nome</string>
+    <string name="input_senha_RegisterFragment">Digite sua senha</string>
+    <string name="input_email_RegisterFragment">Digite seu e-mail</string>
+    <string name="input_telefone_RegisterFragment">Digite seu número de celular</string>
+    <string name="btn_criar_conta_RegisterFragment">Criar Conta</string>
 
 
     <!-- Mensagens usada por padrao no bottomSheet -->
@@ -31,5 +58,7 @@
     <string name="email_in_use_register_fragment">Possuimos um cadastro com este e-mail, opte por redefinir seua senha de acesso</string>
     <string name="strong_password_register_fragment">Insira uma senha mais forte.</string>
     <string name="ocorreu_um_erro">Ocorreu um erro</string>
+
+
 
 </resources>
