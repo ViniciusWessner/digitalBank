@@ -25,11 +25,19 @@ class AuthFirebaseDataSourceImp @Inject constructor(
         }
     }
 
-    override suspend fun register(user: User): User {
+    override suspend fun register(nome: String, email: String,celular: String, senha: String): User {
         return suspendCoroutine { continuation ->
-            firebaseAuth.createUserWithEmailAndPassword(user.email, user.senha)
+            firebaseAuth.createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        val userId = task.result.user?.uid ?: ""
+                        val user = User(
+                            id = userId,
+                            name = nome,
+                            email = email,
+                            celular = celular,
+                            senha = senha
+                        )
                         continuation.resumeWith(Result.success(user))
                     } else {
                         task.exception?.let {
