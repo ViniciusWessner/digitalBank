@@ -1,11 +1,11 @@
 package com.example.digitalbank.domain.profile
 
 import com.example.digitalbank.data.model.User
-import com.example.digitalbank.data.repository.profile.ProfileRepositoryImp
+import com.example.digitalbank.data.repository.profile.ProfileDataSourceImp
 import javax.inject.Inject
 
 class SaveProfileUseCase @Inject constructor(
-    private val profileRepositoryImp: ProfileRepositoryImp
+    private val profileRepositoryImp: ProfileDataSourceImp
 ) {
 
     suspend operator fun invoke(user: User){
