@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.data.model.Wallet
 import com.example.digitalbank.databinding.FragmentHomeBinding
@@ -33,6 +34,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getWallet()
+
+        initListenear()
     }
 
     private fun getWallet(){
@@ -54,6 +57,12 @@ class HomeFragment : Fragment() {
 
     private fun showBalance(wallet: Wallet) {
         binding.textBalance.text = getString(R.string.texto_formatado_valor, GetMask.getFormatedValue(wallet.balance))
+    }
+
+    private fun initListenear(){ //ouvinte dos componentes
+        binding.cardDeposit.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_depositFormFragment)
+        }
     }
 
     override fun onDestroy() {
