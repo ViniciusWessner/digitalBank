@@ -9,7 +9,7 @@ class SaveDepositUseCase @Inject constructor(
 ) {
 
     //retorna o id do deposito
-    suspend operator fun invoke(deposit: Deposit): String {
+    suspend operator fun invoke(deposit: Deposit): Deposit {
         return depositDataSourceImp.saveDeposit(deposit)
     }
 
