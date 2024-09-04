@@ -3,6 +3,7 @@ package com.example.digitalbank.data.repository.deposit
 import com.example.digitalbank.data.model.Deposit
 import com.example.digitalbank.util.FirebaseHelper
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
 import javax.inject.Inject
 import kotlin.coroutines.suspendCoroutine
 
@@ -14,18 +15,33 @@ class DepositDataSourceImp @Inject constructor(
         .child("deposit")
         .child(FirebaseHelper.getUserId())
 
-    override suspend fun saveDeposit(deposit: Deposit): String {
+    override suspend fun saveDeposit(deposit: Deposit): Deposit {
         return suspendCoroutine { continuation ->
-            depositReference.child(deposit.id)
-            depositReference.setValue(deposit).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    continuation.resumeWith(Result.success(deposit.id))
-                } else {
-                    task.exception?.let {
-                        continuation.resumeWith(Result.failure(it))
+            depositReference
+                .child(deposit.id)
+                .setValue(deposit).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        val dateReference = depositReference
+                            .child(deposit.id)
+                            .child("date")
+
+                        dateReference.setValue(ServerValue.TIMESTAMP) //seta o valor do horariod e deposito
+                            .addOnCompleteListener { taskSetDate ->
+                                if (taskSetDate.isSuccessful) {
+                                    continuation.resumeWith(Result.success(deposit))
+                                } else {
+                                    taskSetDate.exception?.let {
+                                        continuation.resumeWith(Result.failure(it))
+                                    }
+                                }
+                            }
+                    } else {
+                        task.exception?.let {
+                            continuation.resumeWith(Result.failure(it))
+                        }
                     }
                 }
-            }
 
         }
     }
