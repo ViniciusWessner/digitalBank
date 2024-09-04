@@ -2,6 +2,8 @@ package com.example.digitalbank.di
 
 import com.example.digitalbank.data.repository.auth.AuthFirebaseDataSource
 import com.example.digitalbank.data.repository.auth.AuthFirebaseDataSourceImp
+import com.example.digitalbank.data.repository.deposit.DepositDataSource
+import com.example.digitalbank.data.repository.deposit.DepositDataSourceImp
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,7 +15,12 @@ import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_andro
 abstract class DomainModule {
 
     @Binds
-    abstract fun bindsAuthRepository(
+    abstract fun bindsAuthRepositoryDataSource(
         authFirebaseDataSourceImp: AuthFirebaseDataSourceImp
     ): AuthFirebaseDataSource
+
+    @Binds
+    abstract fun bindsAuthDepositDataSource(
+        depositDataSourceImp: DepositDataSourceImp
+    ): DepositDataSource
 }

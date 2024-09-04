@@ -15,7 +15,7 @@ class WalletDataSourceImp @Inject constructor(
 
     private val walletReference = database.reference //Criando um NÓ wallet no banco
         .child("wallet")
-
+        .child(FirebaseHelper.getUserId())
     override suspend fun initWallet(wallet: Wallet) {
         return suspendCoroutine { continuation ->
             walletReference.child(FirebaseHelper.getUserId())
