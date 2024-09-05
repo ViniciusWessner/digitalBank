@@ -3,6 +3,7 @@ package com.example.digitalbank.data.repository.transaction
 import com.example.digitalbank.data.model.Transaction
 import com.example.digitalbank.util.FirebaseHelper
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
 import javax.inject.Inject
 import kotlin.coroutines.suspendCoroutine
 
@@ -22,10 +23,10 @@ class TransactionDataSourceImp @Inject constructor(
                 .child(transaction.id)
                 .setValue(transaction).addOnCompleteListener{ task ->
                     if (task.isSuccessful) {
-
                         val dateReference = transactionReference
                             .child(transaction.id)
-                            .child("date") //possivelmente uma diferenca de tempo
+                            .child("date")
+                        dateReference.setValue(ServerValue.TIMESTAMP)
 
                         continuation.resumeWith(Result.success(Unit))
                     } else {
