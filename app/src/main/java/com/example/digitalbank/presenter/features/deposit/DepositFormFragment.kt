@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.example.digitalbank.data.enum.TransactionOperation
+import com.example.digitalbank.data.enum.TransactionType
 import com.example.digitalbank.data.model.Deposit
+import com.example.digitalbank.data.model.Transaction
 import com.example.digitalbank.databinding.FragmentDepositFormBinding
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
@@ -62,7 +65,32 @@ class DepositFormFragment : Fragment() {
                     binding.progressBar.isVisible = true
                 }
                 is StateView.Sucess -> {
-                    Toast.makeText(requireContext(), "Sucesso salvo no firebase", Toast.LENGTH_SHORT).show()
+                    val transaction = Transaction(
+                        id = stateView.data?.id ?: "",
+                        operation = TransactionOperation.DEPOSIT,
+                        date = stateView.data?.date ?: 0,
+                        amount = stateView.data?.amount ?: 0f,
+                        type = TransactionType.CASH_IN
+                    )
+                    saveTransaction(transaction)
+                }
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    showBottomSheet(message = stateView.message)
+                }
+            }
+        }
+    }
+
+    private fun saveTransaction(transaction: Transaction){
+        depositViewModel.saveTransaction(transaction).observe(viewLifecycleOwner){stateView ->
+            when(stateView){
+                is StateView.Loading -> {
+
+                }
+                is StateView.Sucess -> {
+
+                    Toast.makeText(requireContext(), "Transacao salva no firebase", Toast.LENGTH_SHORT).show()
                 }
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
