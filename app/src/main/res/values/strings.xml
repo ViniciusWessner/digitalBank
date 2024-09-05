@@ -62,5 +62,13 @@
     <!-- Home Fragment -->
     <string name="texto_formatado_valor">R$ %1s</string>
 
+    <!-- comprovante de pagamento Fragment -->
+    <string name="title_toolbar">Comprovante de Deposito</string>
+    <string name="title_comprovante">Deposito efetuardo\n com sucesso!</string>
+    <string name="subtitle_comprovante">Seu deposito ficará disponivel em até 48h úteis</string>
+    <string name="code_transaction">Codigo da Transação:</string>
+    <string name="date_transaction">Data da Transação</string>
+    <string name="amont_transaction">Valor do deposito</string>
+
 
 </resources>

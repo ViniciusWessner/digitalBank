@@ -4,6 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.digitalbank.data.enum.TransactionOperation
+import com.example.digitalbank.data.enum.TransactionType
 import com.example.digitalbank.data.model.Transaction
 import com.example.digitalbank.databinding.LastTransactionItemBinding
 import com.example.digitalbank.util.GetMask
@@ -43,16 +45,16 @@ class LastTransactionsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val transaction = getItem(position)
 
-        holder.binding.textTrasactionDescription.text = transaction.description
-        holder.binding.textTransactionType.text = when (transaction.description){
-           "Transferencia" -> "T"
-           "Recarga" -> "R"
-           "Deposito" -> "D"
-            else -> {
-                ""
-            }
+        transaction.operation?.let { //valida se a operacao é nula
+            holder.binding.textTrasactionDescription.text = TransactionOperation.getOperation(it)
+
+            holder.binding.textTransactionType.text = TransactionType.getType(it).toString()
+
         }
-        holder.binding.textTrasactionValue.text = GetMask.getFormatedValue(transaction.value)
+
+
+
+        holder.binding.textTrasactionValue.text = GetMask.getFormatedValue(transaction.amount)
         holder.binding.textTrasactionDate.text = GetMask.getFormatedDate(transaction.date, GetMask.DAY_MONTH_YEAR_HOUR_MINUTE)
     }
 

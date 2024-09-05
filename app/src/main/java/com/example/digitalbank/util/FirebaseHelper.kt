@@ -3,6 +3,7 @@ package com.example.digitalbank.util
 import android.app.appsearch.StorageInfo
 import com.example.digitalbank.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class FirebaseHelper {
 
@@ -39,6 +40,9 @@ class FirebaseHelper {
                 else -> R.string.ocorreu_um_erro
             }
         }
+
+
+        fun generateId() = FirebaseDatabase.getInstance().reference.push().key ?: ""
     }
 
 }
