@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
+import com.example.digitalbank.data.enum.TransactionType
+import com.example.digitalbank.data.model.Transaction
 import com.example.digitalbank.data.model.Wallet
 import com.example.digitalbank.databinding.FragmentHomeBinding
 import com.example.digitalbank.util.GetMask
@@ -23,6 +25,7 @@ class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,13 +36,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getWallet()
+        getTransactions()
 
         initListenear()
     }
 
-    private fun getWallet(){
-        homeViewModel.getWallet().observe(viewLifecycleOwner) { stateView ->
+    private fun getTransactions(){
+        homeViewModel.getTransactions().observe(viewLifecycleOwner) { stateView ->
             when(stateView) {
                 is StateView.Loading -> {
 
@@ -49,14 +52,27 @@ class HomeFragment : Fragment() {
                     showBottomSheet(message = stateView.message)
                 }
                 is StateView.Sucess -> {
-                    stateView.data?.let { showBalance(it) }
+                    showBalance(stateView.data ?: emptyList())
+
                 }
             }
         }
     }
 
-    private fun showBalance(wallet: Wallet) {
-        binding.textBalance.text = getString(R.string.texto_formatado_valor, GetMask.getFormatedValue(wallet.balance))
+    private fun showBalance(transactions: List<Transaction>) {
+        var cashIn = 0f
+        var cashOut = 0f
+
+        transactions.forEach{ transaction ->
+            if (transaction.type == TransactionType.CASH_IN){
+                cashIn += transaction.amount
+            } else {
+                cashOut += transaction.amount
+            }
+        }
+
+
+        binding.textBalance.text = getString(R.string.texto_formatado_valor, GetMask.getFormatedValue(cashIn - cashOut))
     }
 
     private fun initListenear(){ //ouvinte dos componentes
