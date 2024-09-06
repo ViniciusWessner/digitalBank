@@ -1,18 +1,22 @@
 package com.example.digitalbank.presenter.home
+import android.content.res.ColorStateList
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.digitalbank.R
 import com.example.digitalbank.data.enum.TransactionOperation
 import com.example.digitalbank.data.enum.TransactionType
 import com.example.digitalbank.data.model.Transaction
-import com.example.digitalbank.databinding.LastTransactionItemBinding
+import com.example.digitalbank.databinding.TransactionItemBinding
 import com.example.digitalbank.util.GetMask
 
-class LastTransactionsAdapter(
+class TransactionAdapter(
     private val transactionSelected: (Transaction) -> Unit
-) : ListAdapter<Transaction, LastTransactionsAdapter.ViewHolder>(DIFF_CALLBACK) {
+) : ListAdapter<Transaction, TransactionAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Transaction>() {
@@ -34,7 +38,7 @@ class LastTransactionsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LastTransactionItemBinding.inflate(
+            TransactionItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -50,6 +54,14 @@ class LastTransactionsAdapter(
 
             holder.binding.textTransactionType.text = TransactionType.getType(it).toString()
 
+            val backgroundColor = if (transaction.type == TransactionType.CASH_IN) {
+                ContextCompat.getColor(holder.itemView.context, R.color.color_cashIn)
+            } else {
+                ContextCompat.getColor(holder.itemView.context, R.color.color_cashOut)
+            }
+
+            holder.binding.textTransactionType.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+
         }
 
 
@@ -58,7 +70,7 @@ class LastTransactionsAdapter(
         holder.binding.textTrasactionDate.text = GetMask.getFormatedDate(transaction.date, GetMask.DAY_MONTH_YEAR_HOUR_MINUTE)
     }
 
-    inner class ViewHolder(val binding: LastTransactionItemBinding) :
+    inner class ViewHolder(val binding: TransactionItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
 }
