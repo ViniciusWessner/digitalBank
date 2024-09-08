@@ -1,3 +1,5 @@
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -5,7 +7,11 @@ plugins {
     id("com.google.gms.google-services")
     //dagger hilt
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
+
+
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -78,5 +84,8 @@ dependencies {
 
     //maskedEdtit - https://github.com/VicMikhailau/MaskedEditText
     implementation("io.github.vicmikhailau:MaskedEditText:5.0.2")
+
+
+
 }
 

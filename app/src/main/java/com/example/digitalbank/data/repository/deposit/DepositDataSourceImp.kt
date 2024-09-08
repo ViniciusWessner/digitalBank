@@ -2,8 +2,11 @@ package com.example.digitalbank.data.repository.deposit
 
 import com.example.digitalbank.data.model.Deposit
 import com.example.digitalbank.util.FirebaseHelper
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
+import com.google.firebase.database.ValueEventListener
 import javax.inject.Inject
 import kotlin.coroutines.suspendCoroutine
 
@@ -15,7 +18,7 @@ class DepositDataSourceImp @Inject constructor(
         .child("deposit")
         .child(FirebaseHelper.getUserId())
 
-    override suspend fun saveDeposit(deposit: Deposit): Deposit {
+    override suspend fun saveDeposit(deposit: Deposit): Deposit { //salva o objeto deposito completo no firebase
         return suspendCoroutine { continuation ->
             depositReference
                 .child(deposit.id)
@@ -44,6 +47,30 @@ class DepositDataSourceImp @Inject constructor(
                 }
 
         }
+    }
+
+    override suspend fun GetDeposit(id: String): Deposit { //recuperar o deposito no firebase usando o ID
+        return suspendCoroutine { continuation ->
+            depositReference
+                .child(id)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val deposit = snapshot.getValue(Deposit::class.java)
+                        deposit?.let {
+                            continuation.resumeWith(Result.success(it))
+                        }
+
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        error.toException().let {
+                            continuation.resumeWith(Result.failure(it))
+                        }
+                    }
+
+                })
+        }
+
     }
 
 }
