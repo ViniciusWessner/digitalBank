@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.data.enum.TransactionOperation
 import com.example.digitalbank.data.enum.TransactionType
 import com.example.digitalbank.data.model.Deposit
@@ -42,38 +43,33 @@ class DepositFormFragment : Fragment() {
         initListener()
     }
 
-    private fun initListener(){
+    private fun initListener() {
         binding.btnContinue.setOnClickListener { validateDeposit() }
     }
 
-    private fun validateDeposit(){
+    private fun validateDeposit() {
         val amount = binding.editAmount.text.toString().trim()
 
-        if (amount.isNotEmpty()){
+        if (amount.isNotEmpty()) {
             val deposit = Deposit(amount = amount.toFloat())
 
             saveDeposit(deposit)
-        }else{
+        } else {
             showBottomSheet(message = "Insira um valor de deposito")
         }
     }
 
-    private fun saveDeposit(deposit: Deposit){
-        depositViewModel.saveDeposit(deposit).observe(viewLifecycleOwner){stateView ->
-            when(stateView){
+    private fun saveDeposit(deposit: Deposit) {
+        depositViewModel.saveDeposit(deposit).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.progressBar.isVisible = true
                 }
+
                 is StateView.Sucess -> {
-                    val transaction = Transaction(
-                        id = stateView.data?.id ?: "",
-                        operation = TransactionOperation.DEPOSIT,
-                        date = stateView.data?.date ?: 0,
-                        amount = stateView.data?.amount ?: 0f,
-                        type = TransactionType.CASH_IN
-                    )
-                    saveTransaction(transaction)
+                    stateView.data?.let { saveTransaction(it) }
                 }
+
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
                     showBottomSheet(message = stateView.message)
@@ -82,16 +78,29 @@ class DepositFormFragment : Fragment() {
         }
     }
 
-    private fun saveTransaction(transaction: Transaction){
-        depositViewModel.saveTransaction(transaction).observe(viewLifecycleOwner){stateView ->
-            when(stateView){
+    private fun saveTransaction(deposit: Deposit) {
+
+        val transaction = Transaction(
+            id = deposit.id,
+            operation = TransactionOperation.DEPOSIT,
+            date = deposit.date,
+            amount = deposit.amount,
+            type = TransactionType.CASH_IN
+        )
+
+        depositViewModel.saveTransaction(transaction).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
 
                 }
-                is StateView.Sucess -> {
 
-                    Toast.makeText(requireContext(), "Transacao salva no firebase", Toast.LENGTH_SHORT).show()
+                is StateView.Sucess -> {
+                    val action = DepositFormFragmentDirections
+                        .actionDepositFormFragmentToDepositReceiptFragment(deposit.id.toString())
+
+                    findNavController().navigate(action)
                 }
+
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
                     showBottomSheet(message = stateView.message)

@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
                 is StateView.Sucess -> {
                     binding.progressbar.isVisible = false
                     showBalance(stateView.data ?: emptyList())
-                    adapterTransaction.submitList(stateView.data?.reversed())
+                    adapterTransaction.submitList(stateView.data?.reversed()?.take(6))
 
                 }
             }
