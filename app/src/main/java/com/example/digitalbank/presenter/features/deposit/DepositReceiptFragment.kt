@@ -14,6 +14,7 @@ import com.example.digitalbank.data.model.Deposit
 import com.example.digitalbank.databinding.FragmentDepositReceiptBinding
 import com.example.digitalbank.util.GetMask
 import com.example.digitalbank.util.StateView
+import com.example.digitalbank.util.initToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +38,7 @@ class DepositReceiptFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar(binding.toolbar, argumentos.homeAsUpEnable)
         initListener()
         getDeposit()
     }

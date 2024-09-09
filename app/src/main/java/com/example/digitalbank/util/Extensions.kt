@@ -9,7 +9,10 @@ import com.example.digitalbank.databinding.LayoutBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 //inicializacao da tooolbar
-fun Fragment.initToolbar(toolbar: Toolbar, homeAsUpEnable: Boolean = true){
+fun Fragment.initToolbar(
+    toolbar: Toolbar,
+    homeAsUpEnable: Boolean = true
+){
     (activity as AppCompatActivity).setSupportActionBar(toolbar)
     (activity as AppCompatActivity).title = ""
     (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)

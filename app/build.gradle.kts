@@ -85,6 +85,9 @@ dependencies {
     //maskedEdtit - https://github.com/VicMikhailau/MaskedEditText
     implementation("io.github.vicmikhailau:MaskedEditText:5.0.2")
 
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.2")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.2")
+
 
 
 }

@@ -96,7 +96,7 @@ class DepositFormFragment : Fragment() {
 
                 is StateView.Sucess -> {
                     val action = DepositFormFragmentDirections
-                        .actionDepositFormFragmentToDepositReceiptFragment(deposit.id.toString())
+                        .actionDepositFormFragmentToDepositReceiptFragment(deposit.id.toString(), false)
 
                     findNavController().navigate(action)
                 }
