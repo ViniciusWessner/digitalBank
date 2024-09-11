@@ -13,6 +13,7 @@ import com.example.digitalbank.data.enum.TransactionOperation
 import com.example.digitalbank.data.enum.TransactionType
 import com.example.digitalbank.data.model.Transaction
 import com.example.digitalbank.databinding.FragmentHomeBinding
+import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.GetMask
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.showBottomSheet
@@ -108,6 +109,21 @@ class HomeFragment : Fragment(
     }
 
     private fun initListenear() { //ouvinte dos componentes
+        binding.btnLogout.setOnClickListener {
+            //desloga do firebase
+            FirebaseHelper.getAuth().signOut()
+            //manda pra tela de login
+            findNavController().navigate(R.id.action_homeFragment_to_authentication)
+        }
+
+        binding.btnVerTodas.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_extractFragment)
+        }
+
+        binding.cardExtract.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_extractFragment)
+        }
+
         binding.cardDeposit.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_depositFormFragment)
         }

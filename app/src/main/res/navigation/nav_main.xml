@@ -61,8 +61,16 @@
             android:id="@+id/action_homeFragment_to_depositFormFragment"
             app:destination="@id/depositFormFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_depositReceiptFragment2"
+            android:id="@+id/action_homeFragment_to_depositReceiptFragment"
             app:destination="@id/depositReceiptFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_extractFragment"
+            app:destination="@id/extractFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_authentication"
+            app:destination="@id/authentication"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/depositFormFragment"
@@ -86,5 +94,14 @@
         <argument
             android:name="homeAsUpEnable"
             app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/extractFragment"
+        android:name="com.example.digitalbank.presenter.features.extract.ExtractFragment"
+        android:label="fragment_extract"
+        tools:layout="@layout/fragment_extract" >
+        <action
+            android:id="@+id/action_extractFragment_to_depositReceiptFragment"
+            app:destination="@id/depositReceiptFragment" />
     </fragment>
 </navigation>
