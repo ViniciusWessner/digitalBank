@@ -127,6 +127,10 @@ class HomeFragment : Fragment(
         binding.cardDeposit.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_depositFormFragment)
         }
+
+        binding.cardProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
     }
 
     override fun onDestroy() {
