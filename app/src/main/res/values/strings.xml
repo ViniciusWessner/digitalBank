@@ -44,6 +44,16 @@
     <string name="input_telefone_RegisterFragment">Digite seu número de celular</string>
     <string name="btn_criar_conta_RegisterFragment">Criar Conta</string>
 
+    <!-- profileFragment -->
+    <string name="txt_nome_profileFragment">Perfil</string>
+    <string name="txt_email_profileFragment">E-mail</string>
+    <string name="txt_telefone_profileFragment">Telefone</string>
+    <string name="input_nome_profileFragment">Digite seu Nome</string>
+    <string name="input_email_profileFragment">Digite seu e-mail</string>
+    <string name="input_telefone_profileFragment">Digite seu número de celular</string>
+    <string name="btn_atualizarperfil_profileFragment">Atualizar perfil</string>
+
+
 
     <!-- Mensagens usada por padrao no bottomSheet -->
     <string name="title_bottom_sheet">Atenção</string>
