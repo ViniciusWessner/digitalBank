@@ -24,9 +24,9 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val profileViewModel:ProfileViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
 
-    private var usuario : User? = null
+    private var usuario: User? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,29 +41,97 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.toolbar)
         getProfile()
+        initListener()
     }
 
-    private fun getProfile(){
-        profileViewModel.getProfile().observe(viewLifecycleOwner){ stateView ->
-            when(stateView){
+    private fun getProfile() {
+        profileViewModel.getProfile().observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.progressBar.isVisible = true
                 }
+
                 is StateView.Sucess -> {
                     binding.progressBar.isVisible = false
                     stateView.data?.let { usuario = it }
                     configData()
 
                 }
+
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    showBottomSheet(message = getString(FirebaseHelper.validErrors(stateView.message ?: "")))
+                    showBottomSheet(
+                        message = getString(
+                            FirebaseHelper.validErrors(
+                                stateView.message ?: ""
+                            )
+                        )
+                    )
                 }
             }
         }
     }
 
-    private fun configData(){
+    private fun saveProfile() {
+        usuario?.let {
+            profileViewModel.saveProfile(it).observe(viewLifecycleOwner) { stateView ->
+                when (stateView) {
+                    is StateView.Loading -> {
+                        binding.progressBar.isVisible = true
+                    }
+
+                    is StateView.Sucess -> {
+                        binding.progressBar.isVisible = false
+                        showBottomSheet(message = "Dados atualizados com sucesso", onClick = findNavController().navigate(R.id.action_profileFragment_to_homeFragment))
+                    }
+
+                    is StateView.Error -> {
+                        binding.progressBar.isVisible = false
+                        showBottomSheet(
+                            message = getString(
+                                FirebaseHelper.validErrors(
+                                    stateView.message ?: ""
+                                )
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initListener() {
+
+        binding.btnSave.setOnClickListener { if (usuario != null) validadeData() }
+
+    }
+
+    private fun validadeData() {
+        val name = binding.editName.text.toString().trim()
+        val celular = binding.editPhone.unMaskedText //sem a mascara
+
+        if (name.isNotEmpty()) {
+            if (celular?.isNotEmpty() == true) {
+                if (celular.length == 11) {
+
+                    usuario?.name = name
+                    usuario?.celular = celular
+
+                    saveProfile()
+                    binding.progressBar.isVisible = true
+                } else {
+                    showBottomSheet(message = getString(R.string.celular_incorreto))
+                }
+            } else {
+                showBottomSheet(message = getString(R.string.celular_empty))
+            }
+        } else {
+            showBottomSheet(message = getString(R.string.name_empty))
+        }
+
+    }
+
+    private fun configData() {
         binding.editName.setText(usuario?.name)
         binding.editPhone.setText(usuario?.celular)
         binding.editEmail.setText(usuario?.email)
