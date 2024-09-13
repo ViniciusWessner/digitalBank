@@ -54,7 +54,6 @@
     <string name="btn_atualizarperfil_profileFragment">Atualizar perfil</string>
 
 
-
     <!-- Mensagens usada por padrao no bottomSheet -->
     <string name="title_bottom_sheet">Atenção</string>
     <string name="message_bottom_sheet">Mensagem generica aqui ocorreu um erro faça isso para solucionar</string>
@@ -79,6 +78,16 @@
     <string name="code_transaction">Codigo da Transação:</string>
     <string name="date_transaction">Data da Transação</string>
     <string name="amont_transaction">Valor do deposito</string>
+
+
+    <!-- comprovante de recarga Fragment -->
+    <string name="title_toolbar_recarga">Comprovante de Recarga</string>
+    <string name="title_comprovante_recarga">Recarga efetuarda\n com sucesso!</string>
+    <string name="subtitle_comprovante_recarga">Seu credito estará disponivel em alguns minutos</string>
+    <string name="code_transaction_recarga">Codigo da Transação:</string>
+    <string name="date_transaction_recarga">Data da Recarga</string>
+    <string name="amont_transaction_recarga">Valor do deposito</string>
+    <string name="number_recarga">Numero</string>
 
 
 </resources>
