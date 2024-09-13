@@ -1,11 +1,14 @@
 package com.example.digitalbank.presenter.auth.login
 
+import android.content.Context
+import android.hardware.input.InputManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -13,13 +16,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentLoginBinding
+import com.example.digitalbank.util.BaseFragment
 import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -54,13 +58,13 @@ class LoginFragment : Fragment() {
         }
     }
 
-
     private fun validadeData(){
         val email = binding.editEmail.text.toString().trim()
         val senha = binding.editSenha.text.toString().trim()
 
         if (email.isNotEmpty()){
             if (senha.isNotEmpty()){
+                hideKeyboard()
                 loginUser(email, senha)
             }else{
                 showBottomSheet(message = getString(R.string.digiteSuaSenha))
@@ -69,6 +73,8 @@ class LoginFragment : Fragment() {
             showBottomSheet(message = getString(R.string.digiteSeuEmail))
         }
     }
+
+
 
     private fun loginUser(email: String, senha: String){
 

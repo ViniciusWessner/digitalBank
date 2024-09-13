@@ -12,14 +12,16 @@ import com.example.digitalbank.R
 import com.example.digitalbank.data.model.User
 import com.example.digitalbank.databinding.FragmentHomeBinding
 import com.example.digitalbank.databinding.FragmentProfileBinding
+import com.example.digitalbank.util.BaseFragment
 import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
 import com.example.digitalbank.util.showBottomSheet
+import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -81,8 +83,9 @@ class ProfileFragment : Fragment() {
                     }
 
                     is StateView.Sucess -> {
+                        Logger.i("VALIDACAO", stateView.data)
                         binding.progressBar.isVisible = false
-                        showBottomSheet(message = "Dados atualizados com sucesso", onClick = findNavController().navigate(R.id.action_profileFragment_to_homeFragment))
+                        showBottomSheet(message = "Dados atualizados com sucesso")
                     }
 
                     is StateView.Error -> {
@@ -116,7 +119,7 @@ class ProfileFragment : Fragment() {
 
                     usuario?.name = name
                     usuario?.celular = celular
-
+                    hideKeyboard()
                     saveProfile()
                     binding.progressBar.isVisible = true
                 } else {
