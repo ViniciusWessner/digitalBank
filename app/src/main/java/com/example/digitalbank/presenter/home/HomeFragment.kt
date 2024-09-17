@@ -131,6 +131,10 @@ class HomeFragment : Fragment(
         binding.cardProfile.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }
+
+        binding.cardRecharge.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_rechargeFormFragment)
+        }
     }
 
     override fun onDestroy() {
