@@ -14,13 +14,14 @@ import com.example.digitalbank.data.enum.TransactionType
 import com.example.digitalbank.data.model.Deposit
 import com.example.digitalbank.data.model.Transaction
 import com.example.digitalbank.databinding.FragmentDepositFormBinding
+import com.example.digitalbank.util.BaseFragment
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
 import com.example.digitalbank.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DepositFormFragment : Fragment() {
+class DepositFormFragment : BaseFragment() {
 
     private var _binding: FragmentDepositFormBinding? = null
     private val binding get() = _binding!!
@@ -52,7 +53,7 @@ class DepositFormFragment : Fragment() {
 
         if (amount.isNotEmpty()) {
             val deposit = Deposit(amount = amount.toFloat())
-
+            hideKeyboard()
             saveDeposit(deposit)
         } else {
             showBottomSheet(message = "Insira um valor de deposito")
@@ -96,7 +97,7 @@ class DepositFormFragment : Fragment() {
 
                 is StateView.Sucess -> {
                     val action = DepositFormFragmentDirections
-                        .actionDepositFormFragmentToDepositReceiptFragment(deposit.id.toString())
+                        .actionDepositFormFragmentToDepositReceiptFragment(deposit.id.toString(), false)
 
                     findNavController().navigate(action)
                 }

@@ -9,6 +9,7 @@
     <string name="celular_empty">Verifique o celular digitado</string>
     <string name="senhas_iguais">suas senhas não coinscidem</string>
     <string name="celular_incorreto">O celular digitado está invalido</string>
+    <string name="valor_da_recarga">Insira o valor que deseja recarregar no celular</string>
 
     <!-- loginFragment Erros -->
     <string name="digiteSuaSenha">Digite sua senha de acesso ao sistema</string>
@@ -44,6 +45,15 @@
     <string name="input_telefone_RegisterFragment">Digite seu número de celular</string>
     <string name="btn_criar_conta_RegisterFragment">Criar Conta</string>
 
+    <!-- profileFragment -->
+    <string name="txt_nome_profileFragment">Perfil</string>
+    <string name="txt_email_profileFragment">E-mail</string>
+    <string name="txt_telefone_profileFragment">Telefone</string>
+    <string name="input_nome_profileFragment">Digite seu Nome</string>
+    <string name="input_email_profileFragment">Digite seu e-mail</string>
+    <string name="input_telefone_profileFragment">Digite seu número de celular</string>
+    <string name="btn_atualizarperfil_profileFragment">Atualizar perfil</string>
+
 
     <!-- Mensagens usada por padrao no bottomSheet -->
     <string name="title_bottom_sheet">Atenção</string>
@@ -69,6 +79,16 @@
     <string name="code_transaction">Codigo da Transação:</string>
     <string name="date_transaction">Data da Transação</string>
     <string name="amont_transaction">Valor do deposito</string>
+
+
+    <!-- comprovante de recarga Fragment -->
+    <string name="title_toolbar_recarga">Comprovante de Recarga</string>
+    <string name="title_comprovante_recarga">Recarga efetuarda\n com sucesso!</string>
+    <string name="subtitle_comprovante_recarga">Seu credito estará disponivel em alguns minutos</string>
+    <string name="code_transaction_recarga">Codigo da Transação:</string>
+    <string name="date_transaction_recarga">Data da Recarga</string>
+    <string name="amont_transaction_recarga">Valor do deposito</string>
+    <string name="number_recarga">Numero</string>
 
 
 </resources>

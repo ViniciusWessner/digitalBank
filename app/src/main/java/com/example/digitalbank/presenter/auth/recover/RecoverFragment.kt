@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
 import com.example.digitalbank.databinding.FragmentRecoverBinding
+import com.example.digitalbank.util.BaseFragment
 import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.initToolbar
@@ -19,7 +20,7 @@ import com.example.digitalbank.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecoverFragment : Fragment() {
+class RecoverFragment : BaseFragment() {
 
     private var _binding: FragmentRecoverBinding? = null
     private val binding get() = _binding!!
@@ -51,6 +52,7 @@ class RecoverFragment : Fragment() {
         val email = binding.editEmail.text.toString().trim()
 
         if (email.isNotEmpty()){
+            hideKeyboard()
             recouverAccount(email)
         }else{
             showBottomSheet(message = getString(R.string.preenchaEmail))

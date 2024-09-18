@@ -9,16 +9,20 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.digitalbank.R
+import com.example.digitalbank.data.enum.TransactionOperation
 import com.example.digitalbank.data.enum.TransactionType
 import com.example.digitalbank.data.model.Transaction
 import com.example.digitalbank.databinding.FragmentHomeBinding
+import com.example.digitalbank.util.FirebaseHelper
 import com.example.digitalbank.util.GetMask
 import com.example.digitalbank.util.StateView
 import com.example.digitalbank.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(
+
+) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -31,7 +35,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-       _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,21 +48,39 @@ class HomeFragment : Fragment() {
         initListenear()
     }
 
-    private fun configRecyclerView(){
-        adapterTransaction = TransactionAdapter(){ tansaction ->
 
+    private fun configRecyclerView() {
+        adapterTransaction = TransactionAdapter(requireContext()) { transaction ->
+            when (transaction.operation) {
+                TransactionOperation.DEPOSIT -> {
+                    val action = HomeFragmentDirections
+                        .actionHomeFragmentToDepositReceiptFragment(transaction.id, true)
 
+                    findNavController().navigate(action)
+                }
+
+                TransactionOperation.RECHARGE -> {
+                    val action = HomeFragmentDirections
+                        .actionHomeFragmentToRechardReceiptFragment(transaction.id, true)
+
+                    findNavController().navigate(action)
+                }
+
+                else -> {
+                    //se nao for nenhum deles nao faz nada
+                }
+            }
         }
 
-        with(binding.rvTransactions) { //usamos with para pegar o contexto e nao ficar repetindo
+        binding.rvTransactions.apply {
             setHasFixedSize(true)
             adapter = adapterTransaction
         }
     }
 
-    private fun getTransactions(){
+    private fun getTransactions() {
         homeViewModel.getTransactions().observe(viewLifecycleOwner) { stateView ->
-            when(stateView) {
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.progressbar.isVisible = true
                 }
@@ -67,6 +89,7 @@ class HomeFragment : Fragment() {
                     binding.progressbar.isVisible = false
                     showBottomSheet(message = stateView.message)
                 }
+
                 is StateView.Sucess -> {
                     binding.progressbar.isVisible = false
                     showBalance(stateView.data ?: emptyList())
@@ -81,8 +104,8 @@ class HomeFragment : Fragment() {
         var cashIn = 0f
         var cashOut = 0f
 
-        transactions.forEach{ transaction ->
-            if (transaction.type == TransactionType.CASH_IN){
+        transactions.forEach { transaction ->
+            if (transaction.type == TransactionType.CASH_IN) {
                 cashIn += transaction.amount
             } else {
                 cashOut += transaction.amount
@@ -90,12 +113,36 @@ class HomeFragment : Fragment() {
         }
 
 
-        binding.textBalance.text = getString(R.string.texto_formatado_valor, GetMask.getFormatedValue(cashIn - cashOut))
+        binding.textBalance.text =
+            getString(R.string.texto_formatado_valor, GetMask.getFormatedValue(cashIn - cashOut))
     }
 
-    private fun initListenear(){ //ouvinte dos componentes
+    private fun initListenear() { //ouvinte dos componentes
+        binding.btnLogout.setOnClickListener {
+            //desloga do firebase
+            FirebaseHelper.getAuth().signOut()
+            //manda pra tela de login
+            findNavController().navigate(R.id.action_homeFragment_to_authentication)
+        }
+
+        binding.btnVerTodas.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_extractFragment)
+        }
+
+        binding.cardExtract.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_extractFragment)
+        }
+
         binding.cardDeposit.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_depositFormFragment)
+        }
+
+        binding.cardProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
+
+        binding.cardRecharge.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_rechargeFormFragment)
         }
     }
 

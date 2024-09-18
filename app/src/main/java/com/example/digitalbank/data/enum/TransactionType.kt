@@ -1,6 +1,7 @@
 package com.example.digitalbank.data.enum
 
 import com.example.digitalbank.data.enum.TransactionOperation.DEPOSIT
+import com.example.digitalbank.data.enum.TransactionOperation.RECHARGE
 
 enum class TransactionType {
     CASH_IN,
@@ -11,6 +12,9 @@ enum class TransactionType {
             return when(operation) {
                 DEPOSIT -> {
                     'D'
+                }
+                RECHARGE -> {
+                    'R'
                 }
             }
         }

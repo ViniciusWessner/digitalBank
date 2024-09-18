@@ -1,4 +1,5 @@
 package com.example.digitalbank.presenter.home
+import android.content.Context
 import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.example.digitalbank.databinding.TransactionItemBinding
 import com.example.digitalbank.util.GetMask
 
 class TransactionAdapter(
+    private val context: Context,
     private val transactionSelected: (Transaction) -> Unit
 ) : ListAdapter<Transaction, TransactionAdapter.ViewHolder>(DIFF_CALLBACK) {
 
@@ -68,6 +70,11 @@ class TransactionAdapter(
 
         holder.binding.textTrasactionValue.text = GetMask.getFormatedValue(transaction.amount)
         holder.binding.textTrasactionDate.text = GetMask.getFormatedDate(transaction.date, GetMask.DAY_MONTH_YEAR_HOUR_MINUTE)
+
+        holder.itemView.setOnClickListener {
+            Log.d("TransactionAdapter", "Item clicked: ${transaction.id}")
+            transactionSelected(transaction)
+        }
     }
 
     inner class ViewHolder(val binding: TransactionItemBinding) :

@@ -8,9 +8,12 @@ import com.google.firebase.database.FirebaseDatabase
 class FirebaseHelper {
 
     companion object{
-        fun isAuthenticated() = FirebaseAuth.getInstance().currentUser != null
 
-        fun getUserId() = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        fun getAuth() = FirebaseAuth.getInstance()
+
+        fun isAuthenticated() = getAuth().currentUser != null
+
+        fun getUserId() = getAuth().currentUser?.uid ?: ""
 
         fun validErrors(error: String): Int {
             return when {
@@ -40,7 +43,6 @@ class FirebaseHelper {
                 else -> R.string.ocorreu_um_erro
             }
         }
-
 
         fun generateId() = FirebaseDatabase.getInstance().reference.push().key ?: ""
     }
