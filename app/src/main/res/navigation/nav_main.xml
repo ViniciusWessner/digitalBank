@@ -112,6 +112,9 @@
         <action
             android:id="@+id/action_extractFragment_to_depositReceiptFragment"
             app:destination="@id/depositReceiptFragment" />
+        <action
+            android:id="@+id/action_extractFragment_to_rechardReceiptFragment"
+            app:destination="@id/rechardReceiptFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -130,12 +133,19 @@
         <action
             android:id="@+id/action_rechargeFormFragment_to_rechardReceiptFragment"
             app:destination="@id/rechardReceiptFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/rechargeFormFragment"
             app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/rechardReceiptFragment"
         android:name="com.example.digitalbank.presenter.features.recharge.RechardReceiptFragment"
         android:label="fragment_rechard_receipt"
-        tools:layout="@layout/fragment_rechard_receipt" />
+        tools:layout="@layout/fragment_rechard_receipt" >
+        <argument
+            android:name="idRecharge"
+            app:argType="string" />
+        <argument
+            android:name="homeAsUpEnable"
+            app:argType="boolean" />
+    </fragment>
 </navigation>

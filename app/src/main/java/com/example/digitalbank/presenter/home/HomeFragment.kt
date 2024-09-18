@@ -58,7 +58,16 @@ class HomeFragment : Fragment(
 
                     findNavController().navigate(action)
                 }
+
+                TransactionOperation.RECHARGE -> {
+                    val action = HomeFragmentDirections
+                        .actionHomeFragmentToRechardReceiptFragment(transaction.id, true)
+
+                    findNavController().navigate(action)
+                }
+
                 else -> {
+                    //se nao for nenhum deles nao faz nada
                 }
             }
         }

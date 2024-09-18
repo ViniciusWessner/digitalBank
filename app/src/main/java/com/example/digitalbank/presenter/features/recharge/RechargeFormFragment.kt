@@ -8,6 +8,7 @@ import android.view.ViewGroup
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 
 import com.example.digitalbank.R
 import com.example.digitalbank.data.enum.TransactionOperation
@@ -116,6 +117,11 @@ class RechargeFormFragment : BaseFragment() {
 
                 is StateView.Sucess -> {
                     showBottomSheet(message = "Informação enviada ao firebase")
+                    //action_rechargeFormFragment_to_rechardReceiptFragment
+
+                    val action = RechargeFormFragmentDirections
+                        .actionRechargeFormFragmentToRechardReceiptFragment(transaction.id)
+                    findNavController().navigate(action)
                 }
 
                 is StateView.Error -> {

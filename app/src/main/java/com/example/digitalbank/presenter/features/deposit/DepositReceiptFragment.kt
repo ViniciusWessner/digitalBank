@@ -24,7 +24,7 @@ class DepositReceiptFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: DepositReceiptViewModel by viewModels()
-    private val argumentos: DepositReceiptFragmentArgs by navArgs()
+    private val args: DepositReceiptFragmentArgs by navArgs()
 
 
 
@@ -38,13 +38,13 @@ class DepositReceiptFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar(binding.toolbar, argumentos.homeAsUpEnable)
+        initToolbar(binding.toolbar, args.homeAsUpEnable)
         initListener()
         getDeposit()
     }
 
     private fun getDeposit() {
-        viewModel.getDeposit(argumentos.idDeposit).observe(viewLifecycleOwner) { stateView ->
+        viewModel.getDeposit(args.idDeposit).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {
 

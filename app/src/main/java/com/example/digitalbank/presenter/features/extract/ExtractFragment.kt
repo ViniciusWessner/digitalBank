@@ -55,6 +55,12 @@ class ExtractFragment : Fragment() {
 
                     findNavController().navigate(action)
                 }
+
+                TransactionOperation.RECHARGE -> {
+                    val action = ExtractFragmentDirections
+                        .actionExtractFragmentToRechardReceiptFragment(transaction.id, true)
+                }
+
                 else -> {
                 }
             }
